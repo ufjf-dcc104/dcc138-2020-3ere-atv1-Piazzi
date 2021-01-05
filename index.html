@@ -17,7 +17,7 @@
         canvas.width = 640;
         canvas.height = 480;
         let x = 100;
-        let y = 150;
+        let y = 100;
         let start, timeDifference;
 
 
@@ -33,6 +33,7 @@
 
             // Atualiza estado
             x = x + 10*timeDifference;
+            y = 100 + 1500*Math.cos(timestamp/200)*timeDifference;
 
             // Desenha elementos
             context.fillStyle = "white";
