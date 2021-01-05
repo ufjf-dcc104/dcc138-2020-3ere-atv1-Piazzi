@@ -30,6 +30,10 @@
             // Desenha fundo
             context.fillStyle = "royalblue";
             context.fillRect(0,0,canvas.width,canvas.height);
+
+            // Atualiza estado
+            x = x + 10*timeDifference;
+
             // Desenha elementos
             context.fillStyle = "white";
             context.fillRect(x, y,20,20);
