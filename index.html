@@ -16,19 +16,25 @@
 
         canvas.width = 640;
         canvas.height = 480;
-
         let x = 100;
         let y = 150;
+        let start, timeDifference;
 
-        desenha();
-        function desenha()
+
+        requestAnimationFrame(desenha);
+        function desenha(timestamp)
         {
+            start = start ?? timestamp;
+            timeDifference = (timestamp - start)/1000;
+
             // Desenha fundo
             context.fillStyle = "royalblue";
             context.fillRect(0,0,canvas.width,canvas.height);
             // Desenha elementos
             context.fillStyle = "white";
             context.fillRect(x, y,20,20);
+            requestAnimationFrame(desenha);
+            start = timestamp;
         }
        
     </script>
