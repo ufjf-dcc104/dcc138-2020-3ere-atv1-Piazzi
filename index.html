@@ -20,7 +20,6 @@
         let y = 100;
         let start, timeDifference;
 
-
         requestAnimationFrame(desenha);
         function desenha(timestamp)
         {
@@ -36,12 +35,21 @@
             y = 100 + 1500*Math.cos(timestamp/200)*timeDifference;
 
             // Desenha elementos
-            context.fillStyle = "white";
+            context.fillStyle = getRandomColor();
             context.fillRect(x, y,20,20);
             requestAnimationFrame(desenha);
             start = timestamp;
         }
-       
+
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        
     </script>
 
 </body>
