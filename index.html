@@ -18,8 +18,10 @@
       canvas.height = 480;
       let x = 100;
       let vx = 0;
+      let ax = 0;
       let y = 100;
       let vy = 0;
+      let ay = 0;
       const velocity = 80;
 
       let start, timeDifference;
@@ -34,11 +36,14 @@
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         // Atualiza dinâmica dos estados
+        vx = vx + ax * timeDifference;
         x = x + vx * timeDifference;
+        
+        vy = vy + ay * timeDifference;
         y = y + vy * timeDifference;
 
         // Desenha elementos
-        context.fillStyle = 'white';
+        context.fillStyle = "white";
         context.fillRect(x, y, 20, 20);
         requestAnimationFrame(desenha);
         start = timestamp;
@@ -62,34 +67,37 @@
 
         switch (event.key) {
           case "ArrowUp":
-              vy = -velocity;
-              break;
+            ay = -velocity;
+            break;
           case "ArrowDown":
-            vy = +velocity;
+            ay = +velocity;
             break;
           case "ArrowLeft":
-            vx = -velocity;
+            ax = -velocity;
             break;
           case "ArrowRight":
-            vx = +velocity;
+            ax = +velocity;
             break;
         }
       }
 
       // Para o movimento do bloco após soltar a tecla
-      function teclaSolta(event)
-      {
+      function teclaSolta(event) {
         switch (event.key) {
           case "ArrowUp":
+            ay = 0;
             vy = 0;
             break;
           case "ArrowDown":
+            ay = 0;
             vy = 0;
             break;
           case "ArrowLeft":
+            ax = 0;
             vx = 0;
             break;
           case "ArrowRight":
+            ax = 0;
             vx = 0;
             break;
         }
