@@ -20,6 +20,7 @@
       let vx = 0;
       let y = 100;
       let vy = 0;
+      const velocity = 80;
 
       let start, timeDifference;
 
@@ -61,16 +62,16 @@
 
         switch (event.key) {
           case "ArrowUp":
-            vy = -20;
-            break;
+              vy = -velocity;
+              break;
           case "ArrowDown":
-            vy = +20;
+            vy = +velocity;
             break;
           case "ArrowLeft":
-            vx = -20;
+            vx = -velocity;
             break;
           case "ArrowRight":
-            vx = +20;
+            vx = +velocity;
             break;
         }
       }
