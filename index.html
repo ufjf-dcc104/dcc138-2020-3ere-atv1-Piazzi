@@ -52,10 +52,13 @@
         return color;
       }
 
-      addEventListener("keyup", teclaPressionada);
+      addEventListener("keydown", teclaPressionada);
+      addEventListener("keyup", teclaSolta);
 
       // Adiciona controle de velocidades
       function teclaPressionada(event) {
+        console.log(event.key);
+
         switch (event.key) {
           case "ArrowUp":
             vy = -20;
@@ -68,6 +71,25 @@
             break;
           case "ArrowRight":
             vx = +20;
+            break;
+        }
+      }
+
+      // Para o movimento do bloco após soltar a tecla
+      function teclaSolta(event)
+      {
+        switch (event.key) {
+          case "ArrowUp":
+            vy = 0;
+            break;
+          case "ArrowDown":
+            vy = 0;
+            break;
+          case "ArrowLeft":
+            vx = 0;
+            break;
+          case "ArrowRight":
+            vx = 0;
             break;
         }
       }
