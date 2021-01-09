@@ -16,12 +16,15 @@
 
       canvas.width = 640;
       canvas.height = 480;
-      let x = 100;
-      let vx = 0;
-      let ax = 0;
-      let y = 100;
-      let vy = 0;
-      let ay = 0;
+
+      let player = {
+        x: 100,
+        vx: 0,
+        ax: 0,
+        y: 100,
+        vy: 0,
+        ay: 0,
+      };
 
       let ex = 300;
       let evx = 0;
@@ -30,7 +33,7 @@
       let evy = 0;
       let eay = 0;
 
-      const velocity = 80;
+      const velocity = 180;
 
       let start, timeDifference;
 
@@ -44,25 +47,23 @@
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         // Controladores
-        eax = 0.5*(x - ex) - 0.2*evx;         
-        eay = 0.5*(y - ey) - 0.2*evy; 
-
+        eax = 0.5 * (player.x - ex) - 0.2 * evx;
+        eay = 0.5 * (player.y - ey) - 0.2 * evy;
 
         // Atualiza dinâmica dos estados
-        vx = vx + ax * timeDifference;
-        x = x + vx * timeDifference;
-        vy = vy + ay * timeDifference;
-        y = y + vy * timeDifference;
+        player.vx = player.vx + player.ax * timeDifference;
+        player.x = player.x + player.vx * timeDifference;
+        player.vy = player.vy + player.ay * timeDifference;
+        player.y = player.y + player.vy * timeDifference;
 
         evx = evx + eax * timeDifference;
         ex = ex + evx * timeDifference;
         evy = evy + eay * timeDifference;
         ey = ey + evy * timeDifference;
 
-
         // Desenha elementos
         context.fillStyle = "white";
-        context.fillRect(x, y, 20, 20);
+        context.fillRect(player.x, player.y, 20, 20);
 
         context.fillStyle = "tomato";
         context.fillRect(ex, ey, 20, 20);
@@ -89,16 +90,16 @@
 
         switch (event.key) {
           case "ArrowUp":
-            ay = -velocity;
+            player.ay = -velocity;
             break;
           case "ArrowDown":
-            ay = +velocity;
+            player.ay = +velocity;
             break;
           case "ArrowLeft":
-            ax = -velocity;
+            player.ax = -velocity;
             break;
           case "ArrowRight":
-            ax = +velocity;
+            player.ax = +velocity;
             break;
         }
       }
@@ -107,20 +108,20 @@
       function teclaSolta(event) {
         switch (event.key) {
           case "ArrowUp":
-            ay = 0;
-            vy = 0;
+            player.ay = 0;
+            player.vy = 0;
             break;
           case "ArrowDown":
-            ay = 0;
-            vy = 0;
+            player.ay = 0;
+            player.vy = 0;
             break;
           case "ArrowLeft":
-            ax = 0;
-            vx = 0;
+            player.ax = 0;
+            player.vx = 0;
             break;
           case "ArrowRight":
-            ax = 0;
-            vx = 0;
+            player.ax = 0;
+            player.vx = 0;
             break;
         }
       }
