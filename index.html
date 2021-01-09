@@ -24,10 +24,9 @@
         y: 100,
         vy: 0,
         ay: 0,
-        desenhar: function () {
-          context.fillStyle = "white";
-          context.fillRect(this.x, this.y, 20, 20);
-        },
+        desenhar: desenharElemento,
+        mover: moverElemento,
+        cor: "white"
       };
 
       let enemy = {
@@ -37,10 +36,9 @@
         y: 200,
         vy: 0,
         ay: 0,
-        desenhar: function () {
-          context.fillStyle = "tomato";
-          context.fillRect(this.x, this.y, 20, 20);
-        },
+        desenhar: desenharElemento,
+        mover: moverElemento,
+        cor: "tomato"
       };
 
       const velocity = 180;
@@ -61,15 +59,9 @@
         enemy.ay = 0.5 * (player.y - enemy.y) - 0.2 * enemy.vy;
 
         // Atualiza dinâmica dos estados
-        player.vx = player.vx + player.ax * timeDifference;
-        player.x = player.x + player.vx * timeDifference;
-        player.vy = player.vy + player.ay * timeDifference;
-        player.y = player.y + player.vy * timeDifference;
-
-        enemy.vx = enemy.vx + enemy.ax * timeDifference;
-        enemy.x = enemy.x + enemy.vx * timeDifference;
-        enemy.vy = enemy.vy + enemy.ay * timeDifference;
-        enemy.y = enemy.y + enemy.vy * timeDifference;
+        player.mover();
+        enemy.mover();
+        
 
         // Desenha elementos
         player.desenhar();
@@ -87,6 +79,19 @@
         }
         return color;
       }
+
+      function moverElemento(){
+        this.vx = this.vx + this.ax * timeDifference;
+        this.x = this.x + this.vx * timeDifference;
+        this.vy = this.vy + this.ay * timeDifference;
+        this.y = this.y + this.vy * timeDifference;
+        }
+
+      function desenharElemento()
+      {
+          context.fillStyle = this.cor;
+          context.fillRect(this.x, this.y, 20, 20);
+      }  
 
       addEventListener("keydown", teclaPressionada);
       addEventListener("keyup", teclaSolta);
