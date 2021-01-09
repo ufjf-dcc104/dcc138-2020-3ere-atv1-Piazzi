@@ -24,6 +24,10 @@
         y: 100,
         vy: 0,
         ay: 0,
+        desenhar: function () {
+          context.fillStyle = "white";
+          context.fillRect(this.x, this.y, 20, 20);
+        },
       };
 
       let enemy = {
@@ -33,6 +37,10 @@
         y: 200,
         vy: 0,
         ay: 0,
+        desenhar: function () {
+          context.fillStyle = "tomato";
+          context.fillRect(this.x, this.y, 20, 20);
+        },
       };
 
       const velocity = 180;
@@ -64,11 +72,8 @@
         enemy.y = enemy.y + enemy.vy * timeDifference;
 
         // Desenha elementos
-        context.fillStyle = "white";
-        context.fillRect(player.x, player.y, 20, 20);
-
-        context.fillStyle = "tomato";
-        context.fillRect(enemy.x, enemy.y, 20, 20);
+        player.desenhar();
+        enemy.desenhar();
 
         requestAnimationFrame(desenha);
         start = timestamp;
@@ -111,19 +116,15 @@
         switch (event.key) {
           case "ArrowUp":
             player.ay = 0;
-            player.vy = 0;
             break;
           case "ArrowDown":
             player.ay = 0;
-            player.vy = 0;
             break;
           case "ArrowLeft":
             player.ax = 0;
-            player.vx = 0;
             break;
           case "ArrowRight":
             player.ax = 0;
-            player.vx = 0;
             break;
         }
       }
