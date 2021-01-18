@@ -32,20 +32,40 @@
       const sprites = [];
       for (let i = 0; i < 10; i++) {
         let enemy = {
-        x: canvas.width * Math.random(),
+          x: canvas.width * Math.random(),
+          vx: 0,
+          ax: 0,
+          y: canvas.height * Math.random(),
+          vy: 0,
+          ay: 0,
+          desenhar: desenharElemento,
+          mover: moverElemento,
+          cor: "tomato",
+          controlar: perseguirAlvo,
+        };
+        sprites.push(enemy);
+      }
+
+      let o = {
+        x: -1000,
         vx: 0,
         ax: 0,
-        y: canvas.height * Math.random(),
+        y: 150,
         vy: 0,
         ay: 0,
         desenhar: desenharElemento,
         mover: moverElemento,
-        cor: getRandomColor(),
-        controlar: perseguirAlvo
+        cor: "green",
+        controlar: function () {
+          if(this.x > canvas.width + 60)
+          {
+            this.x = -1000;
+            this.ax = 0;
+            this.vx = 0;
+          }
+        }
       };
-      sprites.push(enemy);
-    
-      }
+      sprites.push(o);
 
       const velocity = 180;
 
@@ -59,20 +79,19 @@
         // Desenha fundo
         context.fillStyle = "royalblue";
         context.fillRect(0, 0, canvas.width, canvas.height);
-        
+
         player.mover();
         player.desenhar();
 
         for (let i = 0; i < sprites.length; i++) {
           const sprite = sprites[i];
-           // Controladores
-        // sprites.controlar({x:120, y:120});
-        sprite.controlar(player);
-        // Atualiza dinâmica dos estados
-        sprite.mover();
-        // Desenha elementos
-        sprite.desenhar();
-        
+          // Controladores
+          // sprites.controlar({x:120, y:120});
+          sprite.controlar?.(player);
+          // Atualiza dinâmica dos estados
+          sprite.mover?.();
+          // Desenha elementos
+          sprite.desenhar();
         }
 
         requestAnimationFrame(desenha);
@@ -100,14 +119,12 @@
         context.fillRect(this.x, this.y, 20, 20);
       }
 
-      function perseguirAlvo(alvo)
-      {
+      function perseguirAlvo(alvo) {
         this.ax = 0.5 * (alvo.x - this.x) - 0.2 * this.vx;
         this.ay = 0.5 * (alvo.y - this.y) - 0.2 * this.vy;
       }
 
-      function evitarAlvo(alvo)
-      {
+      function evitarAlvo(alvo) {
         this.ax = -0.5 * (alvo.x - this.x) - 0.2 * this.vx;
         this.ay = -0.5 * (alvo.y - this.y) - 0.2 * this.vy;
       }
@@ -149,6 +166,15 @@
             break;
           case "ArrowRight":
             player.ax = 0;
+            break;
+            case " ":
+              if(o.x === -1000){
+
+                o.x = player.x;
+                o.y = player.y
+                o.vx = 200;
+                o.ax = 100;
+              }
             break;
         }
       }
