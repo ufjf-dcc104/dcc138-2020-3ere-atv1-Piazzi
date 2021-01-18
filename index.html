@@ -18,7 +18,6 @@
       canvas.height = 480;
 
       let pontos = 0;
-      
 
       let player = {
         x: 200,
@@ -27,6 +26,8 @@
         y: 100,
         vy: 0,
         ay: 0,
+        w: 40,
+        h: 15,
         desenhar: desenharElemento,
         mover: moverElemento,
         cor: "white",
@@ -35,12 +36,14 @@
       const sprites = [];
       for (let i = 0; i < 10; i++) {
         let enemy = {
-          x: canvas.width * (1 + 5*Math.random()),
+          x: canvas.width * (1 + 5 * Math.random()),
           vx: -5,
           ax: 0,
           y: canvas.height * Math.random(),
           vy: 0,
           ay: 0,
+          w: 15,
+          h: 15,
           desenhar: desenharElemento,
           mover: moverElemento,
           cor: "tomato",
@@ -56,17 +59,18 @@
         y: 150,
         vy: 0,
         ay: 0,
+        w: 5,
+        h: 5,
         desenhar: desenharElemento,
         mover: moverElemento,
-        cor: "green",
+        cor: "black",
         controlar: function () {
-          if(this.x > canvas.width + 60)
-          {
+          if (this.x > canvas.width + 60) {
             this.x = -1000;
             this.ax = 0;
             this.vx = 0;
           }
-        }
+        },
       };
       sprites.push(o);
 
@@ -84,7 +88,6 @@
         context.fillRect(0, 0, canvas.width, canvas.height);
 
         player.mover();
-        player.desenhar();
 
         for (let i = 0; i < sprites.length; i++) {
           const sprite = sprites[i];
@@ -96,7 +99,7 @@
           // Desenha elementos
           sprite.desenhar();
 
-          if(colidiram(o, sprite) && o !== sprite){
+          if (colidiram(o, sprite) && o !== sprite) {
             o.x = -1000;
             o.y = -1000;
             o.vx = 0;
@@ -107,16 +110,17 @@
             pontos++;
           }
 
-          if(colidiram(player, sprite) && o !== sprite){
-           
+          if (colidiram(player, sprite) && o !== sprite) {
             sprite.x = 1000;
             sprite.vx = 100;
             sprite.ax = 0;
             pontos -= 3;
           }
         }
+        player.desenhar();
+
         context.fillStyle = "yellow";
-        context.font = "20px cursive"
+        context.font = "20px cursive";
         context.fillText(pontos, 10, 30);
 
         requestAnimationFrame(desenha);
@@ -141,7 +145,7 @@
 
       function desenharElemento() {
         context.fillStyle = this.cor;
-        context.fillRect(this.x, this.y, 20, 20);
+        context.fillRect(this.x, this.y, this.w, this.h);
       }
 
       function perseguirAlvo(alvo) {
@@ -192,26 +196,25 @@
           case "ArrowRight":
             player.ax = 0;
             break;
-            case " ":
-              if(o.x === -1000){
-
-                o.x = player.x;
-                o.y = player.y
-                o.vx = 200;
-                o.ax = 100;
-              }
+          case " ":
+            if (o.x === -1000) {
+              o.x = player.x;
+              o.y = player.y;
+              o.vx = 200;
+              o.ax = 100;
+            }
             break;
-        }        
+        }
       }
 
       function colidiram(A, B) {
-          return !(
-            (A.x > B.x + 20)
-            ||(A.x + 20 < B.x )
-            ||(A.y > B.y + 20)
-            ||(A.y + 20 < B.y )
-            );
-        }
+        return !(
+          A.x > B.x + B.w ||
+          A.x + A.w < B.x ||
+          A.y > B.y + B.h ||
+          A.y + A.h < B.y
+        );
+      }
     </script>
   </body>
 </html>
