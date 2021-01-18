@@ -18,7 +18,7 @@
       canvas.height = 480;
 
       let player = {
-        x: 100,
+        x: 200,
         vx: 0,
         ax: 0,
         y: 100,
@@ -29,18 +29,23 @@
         cor: "white",
       };
 
-      let enemy = {
-        x: 300,
+      const sprites = [];
+      for (let i = 0; i < 10; i++) {
+        let enemy = {
+        x: canvas.width * Math.random(),
         vx: 0,
         ax: 0,
-        y: 200,
+        y: canvas.height * Math.random(),
         vy: 0,
         ay: 0,
         desenhar: desenharElemento,
         mover: moverElemento,
-        cor: "tomato",
+        cor: getRandomColor(),
         controlar: perseguirAlvo
       };
+      sprites.push(enemy);
+    
+      }
 
       const velocity = 180;
 
@@ -54,19 +59,21 @@
         // Desenha fundo
         context.fillStyle = "royalblue";
         context.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Controladores
-        // enemy.controlar({x:120, y:120});
-        enemy.controlar(player);
         
-
-        // Atualiza dinâmica dos estados
         player.mover();
-        enemy.mover();
-
-        // Desenha elementos
         player.desenhar();
-        enemy.desenhar();
+
+        for (let i = 0; i < sprites.length; i++) {
+          const sprite = sprites[i];
+           // Controladores
+        // sprites.controlar({x:120, y:120});
+        sprite.controlar(player);
+        // Atualiza dinâmica dos estados
+        sprite.mover();
+        // Desenha elementos
+        sprite.desenhar();
+        
+        }
 
         requestAnimationFrame(desenha);
         start = timestamp;
