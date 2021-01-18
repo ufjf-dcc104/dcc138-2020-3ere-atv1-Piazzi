@@ -17,6 +17,9 @@
       canvas.width = 640;
       canvas.height = 480;
 
+      let pontos = 0;
+      
+
       let player = {
         x: 200,
         vx: 0,
@@ -92,7 +95,29 @@
           sprite.mover?.();
           // Desenha elementos
           sprite.desenhar();
+
+          if(colidiram(o, sprite) && o !== sprite){
+            o.x = -1000;
+            o.y = -1000;
+            o.vx = 0;
+            o.ax = 0;
+            sprite.x = 1000;
+            sprite.vx = 100;
+            sprite.ax = 0;
+            pontos++;
+          }
+
+          if(colidiram(player, sprite) && o !== sprite){
+           
+            sprite.x = 1000;
+            sprite.vx = 100;
+            sprite.ax = 0;
+            pontos -= 3;
+          }
         }
+        context.fillStyle = "yellow";
+        context.font = "20px cursive"
+        context.fillText(pontos, 10, 30);
 
         requestAnimationFrame(desenha);
         start = timestamp;
@@ -176,8 +201,17 @@
                 o.ax = 100;
               }
             break;
-        }
+        }        
       }
+
+      function colidiram(A, B) {
+          return !(
+            (A.x > B.x + 20)
+            ||(A.x + 20 < B.x )
+            ||(A.y > B.y + 20)
+            ||(A.y + 20 < B.y )
+            );
+        }
     </script>
   </body>
 </html>
